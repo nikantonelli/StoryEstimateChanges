@@ -3,6 +3,7 @@ StoryEstimateChanges
 
 ## Overview
 
+For user stories that are marked as part of an Iteration, find out whether the PlanEstimate field was changed at anytime in the history of the user story.
 
 ## License
 
