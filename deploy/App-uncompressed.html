@@ -3,7 +3,7 @@
 <head>
     <title>StoryEstimateChanges</title>
 
-    <script type="text/javascript" src="/apps/2.0/sdk.js"></script>
+    <script type="text/javascript" src="/apps/2.0/sdk-debug.js"></script>
 
     <script type="text/javascript">
         Rally.onReady(function () {
@@ -63,15 +63,16 @@
 
     usStoreConfig: function(app){
 
-    console.log(this.getContext());
+    console.log(this.getContext().getDataContext());
 
         return {
 
-            context: this.getContext().getDataContext(),
+//            context: this.getContext().getDataContext(), // This is ignored by the LBAPI
+//                                                         // Added extra filter below
             autoLoad: false,
             id: 'usStore',
             fetch: ['FormattedID', 'Name', 'PlanEstimate', 'Iteration'],
-            hydrate: ['FormattedID', 'Name', 'PlanEstimate', 'Iteration' ],
+            hydrate: [ 'Iteration' ],
             filters:  [
                         {
                             property: '_TypeHierarchy',
@@ -81,6 +82,10 @@
                         {
                             property: 'Iteration',
                             value: Rally.util.Ref.getOidFromRef( Ext.getCmp('selectIteration').value)
+                        },
+                        {
+                            property: 'Project',
+                            value: Rally.util.Ref.getOidFromRef(this.getContext().getProject())
                         }
             ]
 
@@ -159,6 +164,7 @@ Ext.util.Observable.capture( iterationSelector, function(event) {
 
         });
     </script>
+
 
 
     <style type="text/css">
